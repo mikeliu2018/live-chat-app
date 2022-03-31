@@ -2236,7 +2236,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.$socket && this.$socket.connected === false && this.$store.state.auth.isAuth === true) {
         console.log('token', this.$store.state.auth.token); // Because websocket not support the Authorization header. We set query string provide server transfor
 
-        this.$socket.io.uri = "http://".concat(location.hostname, ":8000?token=").concat(this.$store.state.auth.token); // websocket connecting 
+        this.$socket.io.uri = "//".concat(location.hostname, "?token=").concat(this.$store.state.auth.token); // websocket connecting 
 
         this.$socket.open();
         console.log('websocket connecting');
@@ -2897,7 +2897,7 @@ var sockets = {
 };
 vue__WEBPACK_IMPORTED_MODULE_3__["default"].use(new (vue_socket_io__WEBPACK_IMPORTED_MODULE_0___default())({
   debug: true,
-  connection: socket_io_client__WEBPACK_IMPORTED_MODULE_1___default()("http://".concat(location.hostname, ":8000"), {
+  connection: socket_io_client__WEBPACK_IMPORTED_MODULE_1___default()("//".concat(location.hostname), {
     autoConnect: false,
     //启动自从自动连接
     secure: true,

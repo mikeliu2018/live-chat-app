@@ -97,7 +97,7 @@
                     console.log('token', this.$store.state.auth.token)
 
                     // Because websocket not support the Authorization header. We set query string provide server transfor
-                    this.$socket.io.uri = `http://${location.hostname}:8000?token=${this.$store.state.auth.token}`
+                    this.$socket.io.uri = `//${location.hostname}?token=${this.$store.state.auth.token}`
                     // websocket connecting 
                     this.$socket.open()
                     console.log('websocket connecting')                    

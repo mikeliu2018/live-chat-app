@@ -25,7 +25,7 @@ const sockets = {
 
 Vue.use(new VueSocketIO({
     debug: true,    
-    connection: SocketIO(`http://${location.hostname}:8000`, {
+    connection: SocketIO(`//${location.hostname}`, {
         autoConnect: false,                //启动自从自动连接
         secure: true,
         transports: ['websocket'],        // ['websocket', 'polling']
