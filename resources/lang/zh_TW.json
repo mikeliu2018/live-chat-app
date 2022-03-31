@@ -1,0 +1,10 @@
+{
+    "Operation complete": "操作完成",
+    "Parameter error": "參數錯誤",
+    "Unauthenticated": "未經身份驗證",
+    "Unauthorized": "未經授權",
+    "Registration failed": "註冊失敗",
+    "Unsupported third-party login": "不支援的第三方登錄",
+    "User successfully registered": "用戶註冊成功",
+    "User successfully signed out": "用戶登出成功"
+}

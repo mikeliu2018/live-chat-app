@@ -1,0 +1,257 @@
+openapi: '3.0.2'
+info:
+  title: API Title
+  version: '1.0'
+servers:
+  - url: http://localhost:8000/
+paths:
+  /api/auth/vendor-signin:
+    post:
+      summary: verify vendor signin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:                
+                - "token"
+                - "vendor"
+              type: object
+              properties:                
+                token:
+                  type: string
+                  example: eyJhbGciOiJSUzI1NiIsImtpZCI6IjMzZmY1YWYxMmQ3NjY2YzU4Zjk5NTZlNjVlNDZjOWMwMmVmOGU3NDIiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiMzg1NjMwMjQ0MTMyLXBiaDUwbzVja2pwdmIwMGVkbDNxNDNpajJvNm5pNXFnLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMzg1NjMwMjQ0MTMyLXBiaDUwbzVja2pwdmIwMGVkbDNxNDNpajJvNm5pNXFnLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAyMjY5NjI2OTE0NzA0ODIxMzgwIiwiaGQiOiJnYXBwcy51Y2guZWR1LnR3IiwiZW1haWwiOiJEOTQxMzAyOEBnYXBwcy51Y2guZWR1LnR3IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF0X2hhc2giOiJ1NnZCTHdodjB2RkNXUllhRE9PaG9nIiwibmFtZSI6IuWKieeDiOmchiIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS9BQVRYQUp6V1VVSlVTcUFveWRDN2tQb2NRdVhXeldwakxOTDF2Y0ZyWG1yUz1zOTYtYyIsImdpdmVuX25hbWUiOiLng4jpnIYiLCJmYW1pbHlfbmFtZSI6IuWKiSIsImxvY2FsZSI6InpoLVRXIiwiaWF0IjoxNjQyMjk0MjA4LCJleHAiOjE2NDIyOTc4MDgsImp0aSI6IjQ3OTY1MWIxOTA2OTQ0MTI0NDk3MWNlOTE2YTExNjcyOTIxMjg0OTAifQ.h33WHgfAHCsMBsqFQHIIK0NC3QHQZjnmpsD57j4rO5Sxh_yduKGBQ3FaWVDF7sypNaH3mVvAhGk9JKB1Aiefnn8Ght5eJDm-E8SvBxiAYIi6k6zSVpAaQqW5IRf8GU9gDD7zX1LdrR_hV_-XHHdZdLpKiyjXvVeunsB9AdPyfikZzPV225hPYKBSJdTt-PbOn4ZtAUhGXGaQqIoa6Qz8dJxpPwQB46cdkqxmaFuFDLlQlfk-avZyE5cZOmRQdlYEPSzlfDiJi9mY2dD_xcMxezorSSyZAW8fFYl-x5We8kqJd9v-b_r9itQyPMbjeiKKmctYNQ7XE4jY8HOTI-qSdg
+                vendor:
+                  type: string
+                  example: google
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/operationComplete"
+                  - $ref: "#/components/schemas/token"
+                properties:
+                  userProfile:
+                    $ref: "#/components/schemas/userProfile"
+      security: []        
+
+  /api/auth/register:
+    post:
+      summary: Creates a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - "name"
+                - "email"                                    
+                - "password"
+                - "password_confirmation"
+              type: object
+              properties:                
+                name:
+                  type: string
+                  example: Mike Liu
+                email:
+                  type: string
+                  example: mike.jaffson@gmail.com
+                password:
+                  type: string
+                  example: mike2018                  
+                password_confirmation:
+                  type: string
+                  example: mike2018                  
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/operationComplete"     
+                properties:
+                  userProfile:
+                    $ref: "#/components/schemas/userProfile"
+      security: []        
+
+  /api/auth/login:
+    put:
+      summary: Login a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:                
+                - "email"                                    
+                - "password"
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: mike.jaffson@gmail.com
+                password:
+                  type: string
+                  example: mike2018
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/operationComplete"                
+                  - $ref: "#/components/schemas/token"
+                properties:
+                  userProfile:
+                    $ref: "#/components/schemas/userProfile"
+        '401':
+          $ref: "#/components/responses/unauthorized"
+      security: []
+
+  /api/auth/logout:
+    put:              
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:      
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/operationComplete"
+        '401':
+          $ref: "#/components/responses/unauthenticated"
+
+  /api/auth/refresh:
+    put:
+      description: 'refresh'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/operationComplete"                
+                  - $ref: "#/components/schemas/token"
+                properties:
+                  userProfile:
+                    $ref: "#/components/schemas/userProfile"
+        '401':
+          $ref: "#/components/responses/unauthenticated"                  
+
+  /api/auth/user-profile:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:      
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/operationComplete"
+                properties:                  
+                  userProfile: 
+                    $ref: "#/components/schemas/userProfile"
+        '401':
+          $ref: "#/components/responses/unauthenticated"
+
+
+components: 
+  schemas:
+    userProfile:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: Mike Liu
+        email: 
+          type: string
+          example: "mike.jaffson@gmail.com"
+    
+    operationComplete:
+      type: object
+      required: 
+        - "status"
+        - "message"
+      properties:                  
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Operation complete"
+
+    unauthorized:
+      type: object
+      required: 
+        - "status"
+        - "message"
+      properties:
+        status:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: "Unauthorized"
+
+    unauthenticated:
+      type: object
+      required: 
+        - "status"
+        - "message"
+      properties:
+        status:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: "Unauthenticated"
+
+    token:
+      type: object
+      properties:
+        access_token:
+          type: string
+          example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY0MjI5MDYyNSwiZXhwIjoxNjQyMjk0MjI1LCJuYmYiOjE2NDIyOTA2MjUsImp0aSI6IklzOVZrSkFoRFhKd0dYM3AiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.4sqNZ-CcbUA4oYu4cFKk1hsTXjd9clvgkPniTWi7amo"
+        token_type:
+          type: string
+          example: "bearer"
+        expires_in:
+          type: integer
+          example: 3600
+
+  responses:
+    ok:
+      description: ''
+      content:
+        application/json:
+          schema: {$ref: "#/components/schemas/operationComplete"}
+
+    unauthorized:
+      description: 'unauthorized'
+      content:
+        application/json:
+          schema: {$ref: "#/components/schemas/unauthorized"}
+
+    unauthenticated:
+      description: 'unauthenticated'
+      content:
+        application/json:
+          schema: {$ref: "#/components/schemas/unauthenticated"}    
+                  
+  securitySchemes:
+    barearOAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - barearOAuth: []
+
