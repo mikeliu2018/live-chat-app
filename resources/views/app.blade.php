@@ -7,7 +7,11 @@
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="385630244132-q997nc8gc04ml3fmhgka4gm7d7btsdlf.apps.googleusercontent.com">
     {{-- <script src="https://apis.google.com/js/platform.js" async defer></script> --}}
+    @if(parse_url(url('/'), PHP_URL_SCHEME) == 'HTTPS')
+    <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
+    @else
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @endif
     <script src="https://apis.google.com/js/platform.js"></script>    
     <title>Live-chat-app</title>        
 </head>
