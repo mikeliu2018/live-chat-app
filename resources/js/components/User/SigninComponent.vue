@@ -47,7 +47,7 @@
                     height: 50,
                     longtitle: true,
                     theme: 'dark',
-                    ux_mode: 'redirect',
+                    // ux_mode: 'redirect',
                     onsuccess: this.onSignIn,
                     onfailure: this.onSignInError
                 })
