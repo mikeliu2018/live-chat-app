@@ -7,10 +7,6 @@ const sockets = {
     connect(data) {
         if (data) {
             console.log('connect', data)                 
-            // this.sockets.subscribe('room', (data) => {                    
-            //     // console.log(data)
-            //     // this.msg = data.message;                    
-            // });                
         }
     },
     reconnect(data) {
@@ -25,14 +21,14 @@ const sockets = {
 
 Vue.use(new VueSocketIO({
     debug: true,    
-    connection: SocketIO(`${location.protocol}//${location.hostname}`, {
-        autoConnect: false,                //启动自从自动连接
+    connection: SocketIO(`${location.protocol}//${location.hostname}:${location.port}`, {
+        autoConnect: false,                
         secure: true,
-        transports: ['websocket'],        // ['websocket', 'polling']
-        reconnection: true,               //启动重新连接
-        reconnectionAttempts: 5,          //最大重试连接次数
-        reconnectionDelay: 2000,          //最初尝试新的重新连接等待时间
-        reconnectionDelayMax: 10000,      //最大等待重新连接,之前的2倍增长
+        transports: ['websocket'],        
+        reconnection: true,               
+        reconnectionAttempts: 5,          
+        reconnectionDelay: 2000,          
+        reconnectionDelayMax: 10000,
         timeout: 20000,
         extraHeaders: {
             "Authorization": ""

@@ -81,7 +81,24 @@
                     console.log(response)
                     let res = response.data
                     this.userProfile = res.userProfile                                        
-                    console.info(this.userProfile)                    
+                    console.info(this.userProfile) 
+                    
+                    // if user login and socket ready do connecting
+                    if (this.$socket && this.$socket.connected === false && this.$store.state.auth.isAuth === true) {
+                        console.log('token', this.$store.state.auth.token)
+
+                        // Because websocket not support the Authorization header. We set query string provide server transfor
+                        this.$socket.io.uri = `${location.protocol}//${location.hostname}:${location.port}?token=${this.$store.state.auth.token}`
+                        // websocket connecting 
+                        this.$socket.open()
+                        console.log('websocket connecting')                    
+                        
+                        this.logChatList()                    
+                    }
+
+                })
+                .catch(error => {
+                    console.log(error)                    
                 })
 
                 // this.messages = Array.from({ length: this.length }, (k, v) => v + 1)
@@ -92,18 +109,6 @@
                 // this.userProfile.vendor_image_url = this.$store.state.user.vendor_image_url
                 // this.userProfile.updated_at = this.$store.state.user.updated_at            
                 
-                // if user login and socket ready do connecting
-                if (this.$socket && this.$socket.connected === false && this.$store.state.auth.isAuth === true) {
-                    console.log('token', this.$store.state.auth.token)
-
-                    // Because websocket not support the Authorization header. We set query string provide server transfor
-                    this.$socket.io.uri = `${location.protocol}//${location.hostname}?token=${this.$store.state.auth.token}`                    
-                    // websocket connecting 
-                    this.$socket.open()
-                    console.log('websocket connecting')                    
-                    
-                    this.logChatList()                    
-                }
                 
             }            
         },        

@@ -28,6 +28,7 @@ Route::group([
     // Route::put('/login', [AuthController::class, 'login']);
     // Route::post('/register', [AuthController::class, 'register']);
     Route::post('/vendor-signin', [AuthController::class, 'vendorSignin']);
+    Route::put('/refresh', [AuthController::class, 'refresh']);
 });
 
 Route::group([
@@ -35,7 +36,6 @@ Route::group([
     'prefix' => 'auth'
 ], function (Illuminate\Routing\Router $router) {
     Route::put('/logout', [AuthController::class, 'logout']);
-    Route::put('/refresh', [AuthController::class, 'refresh']);
     // Route::get('/user-profile', [AuthController::class, 'userProfile']);    
 });
 
