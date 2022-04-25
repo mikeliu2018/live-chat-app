@@ -75,6 +75,23 @@ instance.interceptors.response.use(response => {
             case 404:
                 console.info("status %d, errorMsg: %s.", response.status, response.data.error)
                 break
+            case 500:
+                if (config.url === '/auth/refresh') {
+                    store.dispatch('auth/userAuth', {
+                        token: "",
+                        isAuth: false
+                    })
+                    
+                    setTimeout(() => {
+                        router.replace({
+                            name: 'sign-in',
+                            // query: {
+                            //     redirect: router.currentRoute.fullPath
+                            // }
+                        })                    
+                    })
+                }
+                break                
             default:
                 console.info("status %d, errorMsg: %s.", response.status, response.data.error)
                 break
